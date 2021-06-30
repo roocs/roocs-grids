@@ -29,18 +29,7 @@ setup_requirements = [
     "pytest-runner",
 ]
 
-test_requirements = ["pytest", "tox"]
-
-docs_requirements = [
-    "sphinx",
-    "sphinx-rtd-theme",
-    "nbsphinx",
-    "pandoc",
-    "ipython",
-    "ipykernel",
-    "jupyter_client",
-    "matplotlib",
-]
+test_requirements = ["pytest"]
 
 setup(
     author=__author__,
@@ -89,7 +78,7 @@ setup(
     test_suite="tests",
     tests_require=test_requirements,
     extras_require={"docs": docs_requirements},
-    package_data={"roocs_grids": ["grids"]},
+    package_data={"roocs_grids": ["grids/*"]},
     url="https://github.com/roocs/roocs-grids",
     version=__version__,
     zip_safe=False,
