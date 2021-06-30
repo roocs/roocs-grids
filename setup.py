@@ -21,7 +21,7 @@ import os
 # Use markdown format read me file as GitHub will render it automatically
 # on package page
 here = os.path.abspath(os.path.dirname(__file__))
-_long_description = open(os.path.join(here, "README.md")).read()
+_long_description = open(os.path.join(here, "README.rst")).read()
 
 requirements = [line.strip() for line in open("requirements.txt")]
 
