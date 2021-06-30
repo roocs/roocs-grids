@@ -1,2 +1,2 @@
-# target-grids
-Target grids for roocs regridder
+# roocs-grids
+Grid definitions for the roocs regridder
