@@ -77,7 +77,6 @@ setup(
     setup_requires=setup_requirements,
     test_suite="tests",
     tests_require=test_requirements,
-    extras_require={"docs": docs_requirements},
     package_data={"roocs_grids": ["grids/*"]},
     url="https://github.com/roocs/roocs-grids",
     version=__version__,
