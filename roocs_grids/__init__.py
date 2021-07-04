@@ -20,6 +20,9 @@ grid_dict = {
     "0pt5deg_lsm": "land_sea_mask_05degree.nc4",
     "1deg_lsm": "land_sea_mask_1degree.nc4",
     "2deg_lsm": "land_sea_mask_2degree.nc4",
+    "0pt25deg_era5_lsm_binary": "land_sea_mask_025degree_binary.nc4", # cut at >= 0.5
+    "1deg_lsm_binary": "land_sea_mask_1degree_binary.nc4", # cut at >= 0.5
+    "2deg_lsm_binary": "land_sea_mask_2degree_binary.nc4", # cut at >= 0.5
 }
 
 grids_dir = os.path.join(pkg_dir, "grids")
