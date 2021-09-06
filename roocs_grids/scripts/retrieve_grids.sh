@@ -4,8 +4,8 @@
 ####################################################################################
 #
 # Short script to download the reference target grids used by the roocs regridder
-# 
-# Downloads CMIP6 reference grids provided by 
+#
+# Downloads CMIP6 reference grids provided by
 #  Charles Zender via a http download server and
 #  ATLAS reference grids from the github repo SantanderMetGroup/ATLAS.
 #
@@ -78,8 +78,29 @@ CMIP6Grids+=( cmip6_720x1440_scrip.20181001.nc )
 CMIP6Grids+=( cmip6_721x1440_scrip.20181001.nc )
 #CMIP6Grids+=(  )
 
-echo -e "\nDownloading CMIP6 reference grids from '$CMIP6Link'..." 
+echo -e "\nDownloading CMIP6 reference grids from '$CMIP6Link'..."
 download $targetpath $CMIP6Link ${CMIP6Grids[@]}
+
+
+
+# Apply fixes
+echo -e "\nApplying fixes to the netCDF files..."
+for nc in  ${CMIP6Grids[@]} ${ATLASGrids[@]}; do
+    # 1 # Takes too long for big grids
+    #ncdump $targetpath/$nc > $targetpath/${nc}.cdl
+    # Find and replace "since NA" with "2001-01-01 00:00:00" in CDL version of file
+    #grep -q "since NA" $targetpath/${nc}.cdl && {
+    #  echo "  fixing time@units for $targetpath/${nc}..."
+    #  perl -p -i -w -e 's/since NA/since 2001-01-01 00:00:00/g;' $targetpath/${nc}.cdl
+    #  ncgen -o $targetpath/$nc $targetpath/${nc}.cdl && echo "  ...successful." || echo "  ...failed!"
+    #}
+    #rm -f $targetpath/${nc}.cdl
+    # 2 #
+    ncdump -h $targetpath/$nc | grep -q "days since NA" && {
+        ncatted -O -a units,time,m,c,"days since 2001-01-01 00:00:00" $targetpath/$nc && echo "  ...successful for '$nc'." ||  echo "  ...failed for '$nc'!"
+    }
+done
+echo -e "...done!"
 
 
 
