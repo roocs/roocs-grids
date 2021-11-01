@@ -22,6 +22,9 @@ grid_dict = {
     "0pt25deg_era5_lsm_binary": "land_sea_mask_025degree_binary.nc4",  # float sftlf cut at >= 0.5 land/sea
     "1deg_lsm_binary": "land_sea_mask_1degree_binary.nc4",  # float sftlf cut at >= 0.5 land/sea
     "2deg_lsm_binary": "land_sea_mask_2degree_binary.nc4",  # float sftlf cut at >= 0.5 land/sea
+    "T63_lsm_binary": "grid_T63_lsm_binary.nc",  # float sftlf
+    "T127_lsm_binary": "grid_T127_lsm_binary.nc",  # float sftlf
+    "T255": "grid_T255.nc",
 }
 
 grid_annotations = {
@@ -57,6 +60,14 @@ grid_annotations = {
     " Includes a binary land-sea mask with land/sea fraction cut at >=0.5.",
     "2deg_lsm_binary": "Global 2.0 degree grid with one cell centered at 1.0E,1.0N."
     " Includes a binary land-sea mask with land/sea fraction cut at >=0.5. ",
+    "T63_lsm_binary": "Gaussian global grid of approx. 1.9 degree resolution,"
+    " 96x192 nlatxnlon. Associated to a T63 spectral grid representation. "
+    " Includes a binary land-sea mask.",
+    "T127_lsm_binary": "Gaussian global grid of approx. 1.0 degree resolution,"
+    " 192x384 nlatxnlon. Associated to a T127 spectral grid representation."
+    " Includes a binary land-sea mask.",
+    "T255": "Gaussian global grid of approx. 0.5 degree resolution,"
+    " 384x768 nlatxnlon. Associated to a T255 spectral grid representation.",
 }
 
 grids_dir = os.path.join(pkg_dir, "grids")
