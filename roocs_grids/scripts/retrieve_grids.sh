@@ -24,11 +24,12 @@ download () {
 
     for file in ${FileArr[@]}
     do
-        if [[ ! -e "$TargetPath/$file" ]]
+        filebase=$( basename $file )
+        if [[ ! -e "$TargetPath/$filebase" ]]
         then
-            curl $Link/$file -sSf -L -o $TargetPath/$file && echo "... '$file' retrieved successfully." || echo "Error: Grid '$file' could not be retrieved!"
+            curl $Link/$file -sSf -L -o $TargetPath/$filebase && echo "... '$filebase' retrieved successfully." || echo "Error: Grid '$filebase' could not be retrieved!"
         else
-            echo "... '$file' already exists. Skipping download."
+            echo "... '$filebase' already exists. Skipping download."
         fi
     done
     echo "... done."
@@ -83,6 +84,22 @@ download $targetpath $CMIP6Link ${CMIP6Grids[@]}
 
 
 
+# Retrieve target grids from ESGF as submitted to CMIP6
+
+ESGFLink=http://
+declare -a ESGFGrids
+ESGFGrids+=( esgf-data3.ceda.ac.uk/thredds/fileServer/esg_cmip6/CMIP6/HighResMIP/MPI-M/MPI-ESM1-2-XR/highresSST-present/r1i1p1f1/Amon/sfcWind/gn/v20190923/sfcWind_Amon_MPI-ESM1-2-XR_highresSST-present_r1i1p1f1_gn_195001-195012.nc )
+ESGFGrids+=( esgf3.dkrz.de/thredds/fileServer/cmip6/CMIP/MPI-M/MPI-ESM1-2-LR/1pctCO2/r1i1p1f1/fx/areacella/gn/v20190710/areacella_fx_MPI-ESM1-2-LR_1pctCO2_r1i1p1f1_gn.nc
+)
+ESGFGrids+=( esgf3.dkrz.de/thredds/fileServer/cmip6/CMIP/MPI-M/MPI-ESM1-2-LR/1pctCO2/r1i1p1f1/fx/sftlf/gn/v20190710/sftlf_fx_MPI-ESM1-2-LR_1pctCO2_r1i1p1f1_gn.nc )
+ESGFGrids+=( esgf3.dkrz.de/thredds/fileServer/cmip6/ScenarioMIP/DKRZ/MPI-ESM1-2-HR/ssp370/r3i1p1f1/fx/sftlf/gn/v20190710/sftlf_fx_MPI-ESM1-2-HR_ssp370_r3i1p1f1_gn.nc )
+ESGFGrids+=( esgf3.dkrz.de/thredds/fileServer/cmip6/ScenarioMIP/DKRZ/MPI-ESM1-2-HR/ssp245/r1i1p1f1/fx/areacella/gn/v20190710/areacella_fx_MPI-ESM1-2-HR_ssp245_r1i1p1f1_gn.nc )
+
+echo -e "\nDownloading ESGF target grids from '$ESGFLink'..."
+download $targetpath $ESGFLink ${ESGFGrids[@]}
+
+
+
 # Apply fixes
 echo -e "\nApplying fixes to the netCDF files..."
 for nc in  ${CMIP6Grids[@]} ${ATLASGrids[@]}; do
@@ -99,6 +116,52 @@ for nc in  ${CMIP6Grids[@]} ${ATLASGrids[@]}; do
     ncdump -h $targetpath/$nc | grep -q "days since NA" && {
         ncatted -O -a units,time,m,c,"days since 2001-01-01 00:00:00" $targetpath/$nc && echo "  ...successful for '$nc'." ||  echo "  ...failed for '$nc'!"
     }
+done
+echo -e "...done!"
+
+
+
+# Post Process ESGF Files
+echo -e "\nPost-processing ESGF files..."
+
+# Extract and merge variables
+[[ ! -e $targetpath/grid_T255.nc ]] && {
+    mv $targetpath/sfcWind_Amon_MPI-ESM1-2-XR_highresSST-present_r1i1p1f1_gn_195001-195012.nc $targetpath/grid_T255.nc
+    ncks -O -h -x -v sfcWind,time,time_bnds $targetpath/grid_T255.nc $targetpath/grid_T255.nc > /dev/null
+    nccopy -d 9 -s $targetpath/grid_T255.nc $targetpath/grid_T255_def.nc
+    mv $targetpath/grid_T255_def.nc $targetpath/grid_T255.nc
+}
+[[ ! -e $targetpath/grid_T127_lsm_binary.nc ]] && {
+    mv $targetpath/sftlf_fx_MPI-ESM1-2-HR_ssp370_r3i1p1f1_gn.nc $targetpath/grid_T127_lsm_binary.nc
+    ncks -A -h -v areacella $targetpath/areacella_fx_MPI-ESM1-2-HR_ssp245_r1i1p1f1_gn.nc $targetpath/grid_T127_lsm_binary.nc
+    nccopy -d 9 -s $targetpath/grid_T127_lsm_binary.nc $targetpath/grid_T127_lsm_binary_def.nc
+    mv $targetpath/grid_T127_lsm_binary_def.nc $targetpath/grid_T127_lsm_binary.nc
+}
+[[ ! -e $targetpath/grid_T63_lsm_binary.nc ]] && {
+    mv $targetpath/sftlf_fx_MPI-ESM1-2-LR_1pctCO2_r1i1p1f1_gn.nc $targetpath/grid_T63_lsm_binary.nc
+    ncks -A -h -v areacella $targetpath/areacella_fx_MPI-ESM1-2-LR_1pctCO2_r1i1p1f1_gn.nc $targetpath/grid_T63_lsm_binary.nc
+    nccopy -d 9 -s $targetpath/grid_T63_lsm_binary.nc $targetpath/grid_T63_lsm_binary_def.nc
+    mv $targetpath/grid_T63_lsm_binary_def.nc $targetpath/grid_T63_lsm_binary.nc
+}
+
+# Clean up
+rm -f $targetpath/areacella_fx_MPI-ESM1-2-HR_ssp245_r1i1p1f1_gn.nc $targetpath/areacella_fx_MPI-ESM1-2-LR_1pctCO2_r1i1p1f1_gn.nc $targetpath/sfcWind_Amon_MPI-ESM1-2-XR_highresSST-present_r1i1p1f1_gn_195001-195012.nc $targetpath/sftlf_fx_MPI-ESM1-2-HR_ssp370_r3i1p1f1_gn.nc $targetpath/sftlf_fx_MPI-ESM1-2-LR_1pctCO2_r1i1p1f1_gn.nc
+
+# Remove unnecessary attributes
+atts=(description nco_openmp_thread_number NCO history_of_appended_files activity_id realm branch_method branch_time_in_child branch_time_in_parent contact creation_date experiment experiment_id external_variables forcing_index frequency further_info_url history initialization_index institution institution_id mip_era activity_id parent_activity_id parent_experiment_id parent_mip_era parent_source_id parent_time_units parent_variant_label physics_index product project_id realization_index references source data_specs_version source_id source_type sub_experiment_id sub_experiment table_id table_info title variable_id variant_label license cmor_version tracking_id)
+vatts=(history original_name original_units comment)
+
+for ifile in grid_T127_lsm_binary.nc grid_T63_lsm_binary.nc grid_T255.nc
+do
+    for att in ${atts[@]}; do
+        ncatted -O -h -a $att,global,d,, $targetpath/$ifile
+    done
+    if [[ "$ifile" != *"T255"* ]]; then
+        for vatt in ${vatts[@]}; do
+            ncatted -O -h -a $vatt,sftlf,d,, $targetpath/$ifile
+            ncatted -O -h -a $vatt,areacella,d,, $targetpath/$ifile
+        done
+    fi
 done
 echo -e "...done!"
 
