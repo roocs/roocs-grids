@@ -24,7 +24,7 @@ def test_grid_avail(grid_id, filename):
 
     gf = get_grid_file(grid_id)
     assert os.path.isfile(gf)
-    assert gf.endswith("roocs_grids/grids/{}".format(filename))
+    assert gf.endswith(f"roocs_grids/grids/{filename}")
     assert grid_annotations[grid_id] != ""
 
 
