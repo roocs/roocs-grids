@@ -2,6 +2,9 @@ from os.path import basename
 from pathlib import Path
 
 import xarray as xr
+
+# FIXME: This is a circular dependency, as clisops will be listing roocs-grids as a dependency
+# this must be addressed before this module can be used.
 from clisops import core as clore
 
 from roocs_grids import grids_dir, pkg_dir
@@ -30,6 +33,7 @@ ds = xr.open_dataset(source_file)
 # Create clore.Grid object
 g = clore.Grid(ds)
 # Drop variables and global attributes
+# FIXME: This is broken in newer versions of xarray
 g._drop_vars(keep_attrs=False)
 # Add specified global attributes
 g.ds.attrs.update(attr_dict)
