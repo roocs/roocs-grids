@@ -4,7 +4,7 @@ import pathlib
 __author__ = "Martin Schupfner"
 __email__ = "schupfner@dkrz.de"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 pkg_dir = pathlib.Path(__file__).parent.absolute()
 
