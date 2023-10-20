@@ -1,3 +1,5 @@
 pytest>=7.0.0
 xarray
-# clisops>0.8.0 # incl regridding / Grid functionalities
+bumpversion
+wheel
+twine
