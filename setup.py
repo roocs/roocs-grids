@@ -3,7 +3,7 @@
 __author__ = "Ag Stephens"
 __contact__ = "ag.stephens@stfc.ac.uk"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 import os
 
