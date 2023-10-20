@@ -1,0 +1,94 @@
+[build-system]
+build-backend = "flit_core.buildapi"
+requires = ["flit_core >=3.8,<4"]
+
+[project]
+name = "roocs_grids"
+keywords = ["roocs_grids", "regrid", "grid", "interpolate", "cmip"]
+authors = [
+  {name = "Ag Stephens", email = "nielszeilemaker@godatadriven.com"},
+  {name = "Martin Schupfner", email = "schupfner@dkrz.de"}
+]
+maintainers = [
+  {name = "Carsten Ehbrecht", email = "ehbrecht@dkrz.de"},
+  {name = "Trevor James Smith", email = "smith.trevorj@ouranos.ca"}
+]
+license = {file = "LICENSE"}
+python_requires = ">=3.8.0"
+dynamic = ["description", "version"]
+dependencies = []
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: BSD License",
+  "Natural Language :: English",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Topic :: Scientific/Engineering :: Atmospheric Science",
+  "Topic :: Scientific/Engineering :: GIS",
+  "Topic :: Software Development :: Libraries :: Python Modules"
+]
+
+[project.optional-dependencies]
+dev = [
+  "black",
+  "bump2version",
+  "clisops",
+  "isort",
+  "pytest>=7.0.0",
+  "ruff>=0.1.0",
+  "xarray"
+]
+
+[project.urls]
+"Source" = "https://github.com/roocs/roocs-grids/"
+"Changelog" = "https://github.com/roocs/roocs-grids/blob/main/HISTORY.rst"
+"Issue tracker" = "https://github.com/roocs/roocs-grids/issues"
+"About ROOCS" = "https://roocs.github.io/"
+
+[tool.black]
+target-version = [
+  "py38",
+  "py39",
+  "py310",
+  "py311"
+]
+
+[tool.flit.sdist]
+include = [
+  "AUTHORS.rst",
+  "HISTORY.rst",
+  "LICENSE",
+  "README.md",
+  "aux/*.py",
+  "aux/*.sh",
+  "tests/*.py"
+]
+exclude = [
+  "**/*.py[co]",
+  "**/__pycache__",
+  ".*"
+]
+
+[tool.isort]
+profile = "black"
+py_version = 38
+
+[tool.ruff]
+src = ["roocs_grids"]
+line-length = 88
+target-version = "py38"
+ignore = ["E501"]
+
+[tool.ruff.format]
+line-ending = "auto"
+
+[tool.ruff.isort]
+known-first-party = ["roocs_grids"]
+lines-after-imports = 1

@@ -2,9 +2,6 @@ from os.path import basename
 from pathlib import Path
 
 import xarray as xr
-
-# FIXME: This is a circular dependency, as clisops will be listing roocs-grids as a dependency
-# this must be addressed before this module can be used.
 from clisops import core as clore
 
 from roocs_grids import grids_dir, pkg_dir

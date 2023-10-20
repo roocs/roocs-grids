@@ -1,6 +1,12 @@
-import os
+"""Grid definitions for the roocs regridder."""
+import pathlib
 
-pkg_dir = os.path.dirname(__file__)
+__author__ = "Martin Schupfner"
+__email__ = "schupfner@dkrz.de"
+__copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
+__version__ = "0.1.1"
+
+pkg_dir = pathlib.Path(__file__).parent.absolute()
 
 grid_dict = {
     "0pt25deg": "cmip6_720x1440_scrip.20181001.nc",
@@ -76,11 +82,11 @@ grid_annotations = {
     " 384x768 nlatxnlon. Associated to a T255 spectral grid representation.",
 }
 
-grids_dir = os.path.join(pkg_dir, "grids")
+grids_dir = pathlib.Path(pkg_dir).joinpath("grids")
 
 
-def get_grid_file(grid_id):
+def get_grid_file(grid_id: str) -> pathlib.Path:
     if grid_id not in grid_dict:
-        raise Exception(f"Unknown grid id: {grid_id}")
+        raise FileNotFoundError(f"Unknown grid id: {grid_id}")
 
-    return os.path.join(grids_dir, grid_dict[grid_id])
+    return pathlib.Path(grids_dir).joinpath(grid_dict[grid_id])
