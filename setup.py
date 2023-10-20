@@ -18,7 +18,8 @@ from setuptools import find_packages, setup
 # Use markdown format read me file as GitHub will render it automatically
 # on package page
 here = os.path.abspath(os.path.dirname(__file__))
-_long_description = open(os.path.join(here, "README.rst")).read()
+#_long_description = open(os.path.join(here, "README.rst")).read()
+_long_description = "roocs-grids: Grid definitions for the roocs regridder"
 
 requirements = [line.strip() for line in open("requirements.txt")]
 
