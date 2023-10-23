@@ -6,7 +6,7 @@ requires = ["flit_core >=3.8,<4"]
 name = "roocs_grids"
 keywords = ["roocs_grids", "regrid", "grid", "interpolate", "cmip"]
 authors = [
-  {name = "Ag Stephens", email = "nielszeilemaker@godatadriven.com"},
+  {name = "Ag Stephens", email = "ag.stephens@stfc.ac.uk"},
   {name = "Martin Schupfner", email = "schupfner@dkrz.de"}
 ]
 maintainers = [
