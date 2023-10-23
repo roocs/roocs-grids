@@ -11,4 +11,5 @@ Development Leads
 Contributors
 -------------
 
+* Carsten Ehbrecht <ehbrecht@dkrz.de> `@cehbrecht <https://github.com/cehbrecht>`_
 * Trevor James Smith <smith.trevorj@ouranos.ca> `@Zeitsperre <https://github.com/Zeitsperre>`_
