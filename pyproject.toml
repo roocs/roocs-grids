@@ -65,9 +65,7 @@ include = [
   "AUTHORS.rst",
   "HISTORY.rst",
   "LICENSE",
-  "README.md",
-  "aux/*.py",
-  "aux/*.sh",
+  "README.rst",
   "tests/*.py"
 ]
 exclude = [

@@ -38,7 +38,7 @@ download () {
 
 # Specify target directory
 ScriptPath=$(readlink -f "$0")
-targetpath=$(dirname "$ScriptPath")/../roocs_grids/grids/
+targetpath=$(dirname "$ScriptPath")/../grids/
 
 
 # Retrieve grids from the ATLAS repository
