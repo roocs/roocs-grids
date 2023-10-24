@@ -1,6 +1,19 @@
 Version History
 ===============
 
+v0.1.2 (unreleased)
+-------------------
+
+Bug Fixes
+^^^^^^^^^
+
+* Added basic CI workflows
+* Replaced setuptools with flit and pyproject.toml
+* Added AUTHORS.rst and bump2version configuration
+* Linting with ruff
+* Made testing safer with non-POSIX environments
+
+
 v0.1.1 (2023-10-20)
 -------------------
 
