@@ -71,7 +71,8 @@ include = [
 exclude = [
   "**/*.py[co]",
   "**/__pycache__",
-  ".*"
+  ".*",
+  "scripts/*"
 ]
 
 [tool.isort]
