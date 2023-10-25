@@ -1,7 +1,7 @@
 Version History
 ===============
 
-v0.1.2 (unreleased)
+v0.1.2 (2023-10-25)
 -------------------
 
 Bug Fixes
@@ -12,7 +12,6 @@ Bug Fixes
 * Added AUTHORS.rst and bump2version configuration
 * Linting with ruff
 * Made testing safer with non-POSIX environments
-
 
 v0.1.1 (2023-10-20)
 -------------------
