@@ -1,9 +1,0 @@
-include *.txt
-include *.rst
-include LICENSE
-
-recursive-include aux *
-recursive-include roocs_grids *
-
-recursive-exclude * __pycache__
-recursive-exclude * *.py[co]

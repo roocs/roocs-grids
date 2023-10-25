@@ -2,43 +2,46 @@ default_language_version:
     python: python3
 
 repos:
--   repo: https://github.com/asottile/pyupgrade
+  - repo: https://github.com/asottile/pyupgrade
     rev: v3.10.1
     hooks:
     -   id: pyupgrade
         args: [ '--py39-plus' ]
--   repo: https://github.com/pre-commit/pre-commit-hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
     hooks:
-    -   id: trailing-whitespace
-    -   id: end-of-file-fixer
-    -   id: check-yaml
-    -   id: debug-statements
-    -   id: mixed-line-ending
--   repo: https://github.com/psf/black
+      - id: trailing-whitespace
+        exclude: setup.cfg
+      - id: end-of-file-fixer
+      - id: check-toml
+      - id: check-yaml
+      - id: debug-statements
+      - id: mixed-line-ending
+  - repo: https://github.com/pappasam/toml-sort
+    rev: v0.23.1
+    hooks:
+      - id: toml-sort-fix
+  - repo: https://github.com/psf/black
     rev: 23.7.0
     hooks:
-    -   id: black
-        args: ["--target-version", "py39"]
--   repo: https://github.com/pycqa/flake8
-    rev: 6.1.0
+      - id: black
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.1.1
     hooks:
-    -   id: flake8
-        args: ['--ignore=E501']
--   repo: https://github.com/PyCQA/isort
+      - id: ruff
+  - repo: https://github.com/PyCQA/isort
     rev: 5.12.0
     hooks:
-    -   id: isort
-        args: ['--profile', 'black']
-#-   repo: https://github.com/pycqa/pydocstyle
-#    rev: 6.1.1
-#    hooks:
-#    -   id: pydocstyle
-#        args: ["--convention=numpy"]
--   repo: meta
+    - id: isort
+      args: ['--profile', 'black']
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.27.0
     hooks:
-    -   id: check-hooks-apply
-    -   id: check-useless-excludes
+      - id: check-github-workflows
+  - repo: meta
+    hooks:
+      - id: check-hooks-apply
+      - id: check-useless-excludes
 
 ci:
   autofix_commit_msg: |
